@@ -29,6 +29,11 @@ namespace SimpleImageProcessor
 		private string fileFilter { get; set; }
 
 		/// <summary>
+		/// Specifies the radius of the rounding of the corners
+		/// </summary>
+		private int cornerRadius { get; set; }
+
+		/// <summary>
 		/// Checks if the specified subdirectory exists. If not, then it is created.
 		/// </summary>
 		/// <param name="directoryName">Name of the sub directory to check for existance.</param>
@@ -54,10 +59,11 @@ namespace SimpleImageProcessor
 			return success;
         }
 
-		public DirectoryWatcher(string baseDirectory, string fileFilter)
+		public DirectoryWatcher(string baseDirectory, string fileFilter, string cornerRadius)
 		{
 			this.baseDirectory = baseDirectory;
 			this.fileFilter = fileFilter;
+			this.cornerRadius = Int32.Parse(cornerRadius);
 		}
 
 		/// <summary>
@@ -117,7 +123,7 @@ namespace SimpleImageProcessor
 		private void processImage(string file)
 		{
 			var imageProcessor = new ImageProcessor();
-			imageProcessor.AddRoundCornersAndSave(file, subDirectory(DONE));
+			imageProcessor.AddRoundCornersAndSave(file, subDirectory(DONE), cornerRadius);
 			file.MoveTo(subDirectory(ORIGINAL));
 		}
 

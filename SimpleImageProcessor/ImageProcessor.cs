@@ -19,12 +19,13 @@ namespace SimpleImageProcessor
 		/// </summary>
 		/// <param name="file">The full path of the image file that should be processed</param>
 		/// <param name="directory">The directory in which the new image should be saved (under the name name as the original image)</param>
-		public void AddRoundCornersAndSave(string file, string directory)
+		/// <param name="cornerRadius">The radius of the rounding of the corners</param>
+		public void AddRoundCornersAndSave(string file, string directory, int cornerRadius)
 		{
 			var fileInfo = new FileInfo(file);
 			using (var image = Image.FromFile(fileInfo.FullName))
 			{
-				var roundedImage = addTransparentRoundCorners(image, 25);
+				var roundedImage = addTransparentRoundCorners(image, cornerRadius);
 				var toLocation = Path.Combine(directory, fileInfo.Name);
 				roundedImage.Save(toLocation);
 				Console.WriteLine($"Saved '{fileInfo.Name}' to '{toLocation}'");
